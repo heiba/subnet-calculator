@@ -121,3 +121,7 @@ dmypy.json
 
 # PyCharm
 .idea
+
+# SSL
+*.crt
+*.key
