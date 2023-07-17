@@ -76,6 +76,18 @@ Docker was chosen to simplify the deployment of our application and its dependen
 
 Docker's integration with many CI/CD platforms and cloud providers is also a significant advantage, as it allows us to easily scale and distribute our application.
 
+### Orchestration: Docker Compose
+
+Docker Compose was chosen as our orchestration tool for its simplicity and ease of use in development environments. Docker Compose allows us to define our multi-container application using a simple YAML file, and manage the entire application lifecycle (start, stop, rebuild services, etc.) with a single command.
+
+This is particularly useful for local development and testing, as it allows developers to quickly and easily replicate the application's production environment on their local machine. While Docker Compose can be used in production, in more complex deployments a more powerful orchestration tool like Kubernetes may be preferable.
+
+### Python Library: ipaddress
+
+We chose to use the built-in ipaddress Python library to handle the subnet to IP address translation because of its comprehensive feature set for creating, manipulating, and operating on IPv4 and IPv6 addresses and networks. This library simplifies the task of converting a subnet to its available IP addresses and helps ensure that the IP addresses we generate are valid and correctly formatted.
+
+The ipaddress library is included in the standard Python library and does not require any extra installation, which is an added benefit. It provides a rich set of features to work with: network and address validity checks, iteration over hosting IPs, network and broadcast addresses, etc.
+
 ## Security Considerations
 
 If this server was deployed in an infrastructure, there are several security concerns we should consider:
