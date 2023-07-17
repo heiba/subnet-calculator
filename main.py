@@ -1,5 +1,4 @@
-# This is a simple python app that translates a given subnet to its available IP addresses. Running on Docker,
-# exposed via nginx.
+# This is a simple python app that translates a given subnet to its available IP addresses.
 
 from flask import Flask, request
 from ipaddress import ip_network
