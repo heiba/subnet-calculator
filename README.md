@@ -49,3 +49,56 @@ If you run into issues, please verify the following:
 - The Docker services are running correctly. You can check this with `docker ps`.
 - The self-signed certificate and key files are in the root directory of the project.
 - The volume paths in the `docker-compose.yml` file and the certificate paths in the `nginx.conf` file are correct.
+
+## Design Choices
+
+### Web Server: Nginx
+
+Nginx was chosen as the web server as it serves the purpose of a reverse proxy server, and its documentation and implementation are straight forward.
+
+Nginx is renowned for its efficiency and low memory consumption.  Nginx also supports SSL with minimum configuration.  Finally, Nginx's strong community enables us to troubelshoot issues relatively quicker.
+
+### Application Server: Gunicorn
+
+Gunicorn ("Green Unicorn") is a Python WSGI (Web Server Gateway Interface) HTTP Server that's easy to set up and works excellently with Flask applications. It was chosen as the application server for this project due to its compatibility with our application's technology stack and its lightweight and unopinionated nature.
+
+Gunicorn facilitates the communication between our Flask application and Nginx, allowing the web server to interface with the application using the WSGI (Web Server Gateway Interface) protocol. This choice also simplifies the configuration process, as Gunicorn is straightforward to set up and requires minimal additional configuration.
+
+### Web Framework: Flask
+
+Flask is a lightweight and easy-to-use web framework for Python. Its minimalistic, modular and flexible design was a key factor in our choice. With Flask, we have the freedom to choose exactly what components we want to use, making it perfect for a small, focused application like ours.
+
+Flask's simplicity also makes it easy to get our application up and running quickly, and its compatibility with Gunicorn and Nginx makes it a good fit for this project.
+
+### Containerization: Docker
+
+Docker was chosen to simplify the deployment of our application and its dependencies. By using Docker, we can ensure our application runs in the same environment across any platform, making it easier to develop, test, and deploy.
+
+Docker's integration with many CI/CD platforms and cloud providers is also a significant advantage, as it allows us to easily scale and distribute our application.
+
+## Security Considerations
+
+If this server was deployed in an infrastructure, there are several security concerns we should consider:
+
+### Use of Self-Signed Certificates
+In this project, we used self-signed certificates to enable SSL. In a real-world production environment, self-signed certificates can pose a security risk as they do not provide the level of trust that certificates issued by a Certificate Authority (CA) would. Self-signed certificates will trigger warnings in most web browsers, leading to a poor user experience and potential loss of trust from users. For production environments, we recommend using certificates issued by a well-known CA.
+
+### Regular Patching and Updates
+The server's underlying software components (such as Nginx, Gunicorn, Flask, and the operating system itself) should be regularly updated to ensure any known vulnerabilities are patched. Regular patch management can greatly reduce the risk of exploitation.
+
+### Monitoring and Logging
+There should be robust monitoring and logging in place to detect any malicious activity or anomalies. This includes network monitoring, application monitoring, and intrusion detection systems.
+
+## Integration in a Microservices Architecture
+Integrating this server into a distributed, microservices-oriented, and containerized architecture would involve several steps:
+
+### Dockerization
+We have already containerized the individual services (the Flask application and Nginx) using Docker. Containers are the preferred way to package and deploy services in a microservices architecture due to their isolation, portability, and reproducibility.
+
+### Orchestrating Services
+Currently, we are using Docker compose to run the 3 containers.
+
+In a distributed environment with multiple microservices, we would use an orchestration tool such as Kubernetes or Docker Swarm. These tools help manage, scale, and maintain the containers. Services can be defined, and their replicas can be managed efficiently using declarative syntax. These tools also offer robust solutions for service discovery, load balancing, and zero-downtime deployments.
+
+### Centralized Logging and Monitoring
+Monitoring and logging should be centralized, as microservices could be spread across multiple nodes. Tools like Prometheus for monitoring and the ELK Stack (Elasticsearch, Logstash, Kibana) or DataDog for log management could be used.
