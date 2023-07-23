@@ -114,3 +114,23 @@ In a distributed environment with multiple microservices, we would use an orches
 
 ### Centralized Logging and Monitoring
 Monitoring and logging should be centralized, as microservices could be spread across multiple nodes. Tools like Prometheus for monitoring and the ELK Stack (Elasticsearch, Logstash, Kibana) or DataDog for log management could be used.
+
+## Implementing Git Flow with CI/CD
+
+For a robust and collaborative development workflow, we suggest implementing the following Git flow and continuous integration (CI) and continuous deployment (CD) practices:
+
+### Protected Main Branch
+The main branch is considered as the production-ready branch and should be protected. This can be accomplished in your Git hosting service settings (e.g., GitHub, GitLab, Bitbucket). When you protect a branch, it requires any changes to go through a pull request (PR), prohibits force pushing, and can prevent a branch from being deleted. In addition, you can enforce status checks before a PR can be merged, ensuring that your tests pass before any changes can be made to main.
+
+### Automatic Creation of PRs on Git Push
+To streamline the development process, consider setting up a system where every git push automatically creates a PR. This can often be achieved through CI/CD platform integrations or bots. This practice ensures that every change made is documented and must go through the proper checks before being merged.
+
+### Running Unit Tests in PRs
+As part of the PR checks, unit tests should be run against the changes introduced in the PR. This can be set up using various CI tools, such as GitHub Actions, Jenkins, Travis CI, etc. When the tests are set to run automatically in the PR, any failure can be caught and addressed before the changes are merged into the main branch.
+
+### Automatic Merging of PRs
+For an efficient development workflow, consider setting up a system that automatically merges PRs into the main branch when the unit tests succeed. This ensures that only code that has been tested and verified is merged into your main branch.
+
+Keep in mind that you may want to configure this feature with caution, as it might not be suitable for all teams or projects. If manual code reviews are a part of your process, or if you wish to manually control when changes are merged, this feature might not be for you.
+
+The above measures can help ensure code quality, streamline the development process, and facilitate team collaboration. Note that the actual implementation of these practices will depend on your specific development environment and the tools you use.
