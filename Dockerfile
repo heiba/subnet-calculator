@@ -9,9 +9,15 @@ ADD . /app
 
 # Install Nginx and certbot
 RUN apt-get update && \
-    apt-get install -y nginx python-certbot-nginx && \
+    apt-get install -y nginx certbot python3-certbot-nginx && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install gunicorn
+RUN pip install gunicorn
+
+# Install all requirements
+RUN pip install -r requirements.txt
 
 # Make port 80 available to the world outside this container
 EXPOSE 80 443
